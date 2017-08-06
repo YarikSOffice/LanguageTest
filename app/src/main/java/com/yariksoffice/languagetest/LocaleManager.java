@@ -16,13 +16,14 @@ public class LocaleManager {
     public static final  String LANGUAGE_UKRAINIAN = "uk";
     private static final String LANGUAGE_KEY       = "language_key";
 
-    public static Context setLocale(Context c) {
-        return updateResources(c, getLanguage(c));
+    public static void setLocale(Context c) {
+        setNewLocale(c, getLanguage(c));
     }
 
-    public static Context setNewLocale(Context c, String language) {
+    public static void setNewLocale(Context c, String language) {
         persistLanguage(c, language);
-        return updateResources(c, language);
+        updateResources(c, language);
+        updateResources(c.getApplicationContext(), language);
     }
 
     public static String getLanguage(Context c) {
@@ -38,7 +39,7 @@ public class LocaleManager {
         prefs.edit().putString(LANGUAGE_KEY, language).commit();
     }
 
-    private static Context updateResources(Context context, String language) {
+    private static void updateResources(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
@@ -46,12 +47,10 @@ public class LocaleManager {
         Configuration config = new Configuration(res.getConfiguration());
         if (Build.VERSION.SDK_INT >= 17) {
             config.setLocale(locale);
-            context = context.createConfigurationContext(config);
         } else {
             config.locale = locale;
-            res.updateConfiguration(config, res.getDisplayMetrics());
         }
-        return context;
+        res.updateConfiguration(config, res.getDisplayMetrics());
     }
 
     public static Locale getLocale(Resources res) {
