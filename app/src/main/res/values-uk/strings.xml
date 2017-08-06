@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Мовний тест</string>
+    <string name="hello">Привіт\n%s</string>
+
+    <string name="ukrainian">Українська</string>
+    <string name="english">Англійська</string>
+
+    <string name="settings_label">Налаштування</string>
+
+    <string name="activity_1_label">Екран 1</string>
+    <string name="activity_2_label">Екран 2</string>
+    <string name="activity_1_text">Який-небудь текст 1</string>
+    <string name="activity_2_text">Який-небудь текст 2</string>
+    <string name="start_service">Запустити Service</string>
+    <string name="settings_tips">Клік для перезапуску activity \nДовгий клік для перезапуску application</string>
+</resources>

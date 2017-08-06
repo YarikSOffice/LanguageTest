@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Language Test</string>
+
+    <string name="ukrainian">Ukrainian</string>
+    <string name="english">English</string>
+
+    <string name="hello">Hello\n%s</string>
+
+    <string name="settings_label">Settings</string>
+
+    <string name="activity_1_label">Screen 1</string>
+    <string name="activity_2_label">Screen 2</string>
+    <string name="activity_1_text">Random text 1</string>
+    <string name="activity_2_text">Random text 2</string>
+    <string name="start_service">Start a service</string>
+    <string name="settings_tips">Click for activity restart\nLong click for application restart</string>
+</resources>
