@@ -77,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         TextView tv4 = findViewById(R.id.tv4);
         String defLanguage = Locale.getDefault().getLanguage();
-        tv4.setText("Locale.getDefault()  ");
+        tv4.setText(String.format("Locale.getDefault() - %s", defLanguage));
         tv4.setCompoundDrawablesWithIntrinsicBounds(null, null, getLanguageDrawable(defLanguage), null);
     }
 
@@ -90,8 +90,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void updateInfo(String title, TextView tv, Resources res) {
-        tv.setText(title + Utility.hexString(res));
         Locale l = LocaleManager.getLocale(res);
+        tv.setText(title + Utility.hexString(res) + String.format(" - %s", l.getLanguage()));
         Drawable icon = getLanguageDrawable(l.getLanguage());
         tv.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null);
     }
@@ -120,7 +120,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             case LANGUAGE_UKRAINIAN:
                 return ContextCompat.getDrawable(this, R.drawable.language_uk);
             default:
-                throw new IllegalArgumentException("Unsupported language");
+                Log.w(TAG, "Unsupported language");
+                return null;
         }
     }
 }
