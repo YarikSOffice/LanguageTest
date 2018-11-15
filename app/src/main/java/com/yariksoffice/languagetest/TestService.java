@@ -4,7 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +16,7 @@ public class TestService extends Service {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleManager.setLocale(base));
+        super.attachBaseContext(App.localeManager.setLocale(base));
         Log.d(TAG, "attachBaseContext");
     }
 

@@ -2,10 +2,10 @@ package com.yariksoffice.languagetest.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.widget.Toast;
 
-import com.yariksoffice.languagetest.LocaleManager;
+import com.yariksoffice.languagetest.App;
 import com.yariksoffice.languagetest.R;
 
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_ENGLISH;
@@ -27,7 +27,7 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private boolean setNewLocale(String language, boolean restartProcess) {
-        LocaleManager.setNewLocale(this, language);
+        App.localeManager.setNewLocale(this, language);
 
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));

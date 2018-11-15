@@ -1,7 +1,7 @@
 package com.yariksoffice.languagetest.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.yariksoffice.languagetest.R;
 

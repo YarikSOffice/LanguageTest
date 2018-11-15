@@ -1,28 +1,23 @@
 package com.yariksoffice.languagetest.ui;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.yariksoffice.languagetest.App;
 import com.yariksoffice.languagetest.LocaleManager;
 import com.yariksoffice.languagetest.R;
 import com.yariksoffice.languagetest.Utility;
 
-import java.lang.ref.WeakReference;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import static android.content.pm.PackageManager.GET_META_DATA;
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_ENGLISH;
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_UKRAINIAN;
 
@@ -32,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(LocaleManager.setLocale(base));
+        super.attachBaseContext(App.localeManager.setLocale(base));
         Log.d(TAG, "attachBaseContext");
     }
 
@@ -40,18 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        resetTitles();
-    }
-
-    private void resetTitles() {
-        try {
-            ActivityInfo info = getPackageManager().getActivityInfo(getComponentName(), GET_META_DATA);
-            if (info.labelRes != 0) {
-                setTitle(info.labelRes);
-            }
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        Utility.resetActivityTitle(this);
     }
 
     @Override
@@ -68,11 +52,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         showResourcesInfo();
-        showTitleCache();
+
+        TextView tv = findViewById(R.id.cache);
+        tv.setText(Utility.getTitleCache());
     }
 
     private void showResourcesInfo() {
-        Resources topLevelRes = getTopLevelResources();
+        Resources topLevelRes = Utility.getTopLevelResources(this);
         updateInfo("Top level  ", findViewById(R.id.tv1), topLevelRes);
 
         Resources appRes = getApplication().getResources();
@@ -87,36 +73,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         tv4.setCompoundDrawablesWithIntrinsicBounds(null, null, getLanguageDrawable(defLanguage), null);
     }
 
-    private Resources getTopLevelResources() {
-        try {
-            return getPackageManager().getResourcesForApplication(getApplicationInfo());
-        } catch (NameNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void updateInfo(String title, TextView tv, Resources res) {
         Locale l = LocaleManager.getLocale(res);
         tv.setText(title + Utility.hexString(res) + String.format(" - %s", l.getLanguage()));
         Drawable icon = getLanguageDrawable(l.getLanguage());
         tv.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null);
-    }
-
-    @SuppressWarnings("unchecked")
-    private void showTitleCache() {
-        Object o = Utility.getPrivateField("android.app.ApplicationPackageManager", "sStringCache", null);
-        Map<?, WeakReference<CharSequence>> cache = (Map<?, WeakReference<CharSequence>>) o;
-        if (cache == null) return;
-
-        StringBuilder builder = new StringBuilder("Cache:").append("\n");
-        for (Entry<?, WeakReference<CharSequence>> e : cache.entrySet()) {
-            CharSequence title = e.getValue().get();
-            if (title != null) {
-                builder.append(title).append("\n");
-            }
-        }
-        TextView tv = findViewById(R.id.cache);
-        tv.setText(builder.toString());
     }
 
     private Drawable getLanguageDrawable(String language) {

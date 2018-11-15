@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Мовний тест</string>
+    <string name="app_name">Тест локалізації</string>
     <string name="hello">Привіт\n%s</string>
 
     <string name="ukrainian">Українська</string>

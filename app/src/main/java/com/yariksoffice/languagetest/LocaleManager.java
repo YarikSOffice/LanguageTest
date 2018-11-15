@@ -10,41 +10,48 @@ import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.N;
+
 public class LocaleManager {
 
     public static final  String LANGUAGE_ENGLISH   = "en";
     public static final  String LANGUAGE_UKRAINIAN = "uk";
     private static final String LANGUAGE_KEY       = "language_key";
 
-    public static Context setLocale(Context c) {
-        return updateResources(c, getLanguage(c));
+    private final SharedPreferences prefs;
+
+    public LocaleManager(Context context) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static Context setNewLocale(Context c, String language) {
-        persistLanguage(c, language);
+    public Context setLocale(Context c) {
+        return updateResources(c, getLanguage());
+    }
+
+    public Context setNewLocale(Context c, String language) {
+        persistLanguage(language);
         return updateResources(c, language);
     }
 
-    public static String getLanguage(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+    public String getLanguage() {
         return prefs.getString(LANGUAGE_KEY, LANGUAGE_ENGLISH);
     }
 
     @SuppressLint("ApplySharedPref")
-    private static void persistLanguage(Context c, String language) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+    private void persistLanguage(String language) {
         // use commit() instead of apply(), because sometimes we kill the application process immediately
         // which will prevent apply() to finish
         prefs.edit().putString(LANGUAGE_KEY, language).commit();
     }
 
-    private static Context updateResources(Context context, String language) {
+    private Context updateResources(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
         Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
+        if (Build.VERSION.SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
             context = context.createConfigurationContext(config);
         } else {
@@ -56,6 +63,6 @@ public class LocaleManager {
 
     public static Locale getLocale(Resources res) {
         Configuration config = res.getConfiguration();
-        return Build.VERSION.SDK_INT >= 24 ? config.getLocales().get(0) : config.locale;
+        return Build.VERSION.SDK_INT >= N ? config.getLocales().get(0) : config.locale;
     }
 }
