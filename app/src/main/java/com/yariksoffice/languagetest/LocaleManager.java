@@ -10,6 +10,9 @@ import android.preference.PreferenceManager;
 
 import java.util.Locale;
 
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.N;
+
 public class LocaleManager {
 
     public static final  String LANGUAGE_ENGLISH   = "en";
@@ -45,7 +48,7 @@ public class LocaleManager {
 
         Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= 17) {
+        if (Build.VERSION.SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
         } else {
             config.locale = locale;
@@ -55,6 +58,6 @@ public class LocaleManager {
 
     public static Locale getLocale(Resources res) {
         Configuration config = res.getConfiguration();
-        return Build.VERSION.SDK_INT >= 24 ? config.getLocales().get(0) : config.locale;
+        return Build.VERSION.SDK_INT >= N ? config.getLocales().get(0) : config.locale;
     }
 }
