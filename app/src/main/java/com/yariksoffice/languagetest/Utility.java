@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.os.Build;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
+import static android.os.Build.VERSION_CODES.P;
 
 public class Utility {
 
@@ -45,6 +47,8 @@ public class Utility {
 
     @SuppressWarnings("unchecked")
     public static String getTitleCache() {
+        // https://developer.android.com/about/versions/pie/restrictions-non-sdk-interfaces
+        if (isAtLeastVersion(P)) return "Can't access title cache\nstarting from API 28";
         Object o = Utility.getPrivateField("android.app.ApplicationPackageManager", "sStringCache", null);
         Map<?, WeakReference<CharSequence>> cache = (Map<?, WeakReference<CharSequence>>) o;
         if (cache == null) return "";
@@ -67,4 +71,7 @@ public class Utility {
         }
     }
 
+    public static boolean isAtLeastVersion(int version) {
+        return Build.VERSION.SDK_INT >= version;
+    }
 }
