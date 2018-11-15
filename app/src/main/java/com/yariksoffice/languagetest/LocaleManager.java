@@ -51,7 +51,7 @@ public class LocaleManager {
 
         Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
-        if (Build.VERSION.SDK_INT >= JELLY_BEAN_MR1) {
+        if (Utility.isAtLeastVersion(JELLY_BEAN_MR1)) {
             config.setLocale(locale);
             context = context.createConfigurationContext(config);
         } else {
@@ -63,6 +63,6 @@ public class LocaleManager {
 
     public static Locale getLocale(Resources res) {
         Configuration config = res.getConfiguration();
-        return Build.VERSION.SDK_INT >= N ? config.getLocales().get(0) : config.locale;
+        return Utility.isAtLeastVersion(N) ? config.getLocales().get(0) : config.locale;
     }
 }
