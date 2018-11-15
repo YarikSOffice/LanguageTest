@@ -19,30 +19,38 @@ public class LocaleManager {
     public static final  String LANGUAGE_UKRAINIAN = "uk";
     private static final String LANGUAGE_KEY       = "language_key";
 
-    public static void setLocale(Context c) {
-        setNewLocale(c, getLanguage(c));
+    private final SharedPreferences prefs;
+
+    public LocaleManager(Context context) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static void setNewLocale(Context c, String language) {
-        persistLanguage(c, language);
+    public void setLocale(Context c) {
+        update(c, getLanguage());
+    }
+
+    public void setNewLocale(Context c, String language) {
+        persistLanguage(language);
+        update(c, language);
+    }
+
+    private void update(Context c, String language) {
         updateResources(c, language);
         updateResources(c.getApplicationContext(), language);
     }
 
-    public static String getLanguage(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+    public String getLanguage() {
         return prefs.getString(LANGUAGE_KEY, LANGUAGE_ENGLISH);
     }
 
     @SuppressLint("ApplySharedPref")
-    private static void persistLanguage(Context c, String language) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+    private void persistLanguage(String language) {
         // use commit() instead of apply(), because sometimes we kill the application process immediately
         // which will prevent apply() to finish
         prefs.edit().putString(LANGUAGE_KEY, language).commit();
     }
 
-    private static void updateResources(Context context, String language) {
+    private void updateResources(Context context, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 

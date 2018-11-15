@@ -4,9 +4,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,6 +13,10 @@ import com.yariksoffice.languagetest.R;
 import com.yariksoffice.languagetest.Utility;
 
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_ENGLISH;
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_UKRAINIAN;
@@ -28,8 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        LocaleManager.setLocale(this);
-        Utility.resetActivityTitle(this);
     }
 
     @Override
