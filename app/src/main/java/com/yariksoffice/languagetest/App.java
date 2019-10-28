@@ -7,10 +7,16 @@ import android.util.Log;
 
 public class App extends Application {
 
-    private final String TAG = "App";
+    public static final String TAG = "App";
 
     // for the sake of simplicity. use DI in real apps instead
     public static LocaleManager localeManager;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Utility.bypassHiddenApiRestrictions();
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
