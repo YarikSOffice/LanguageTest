@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class App extends Application {
 
-    private final String TAG = "App";
+    public static final String TAG = "App";
 
     // for the sake of simplicity. use DI in real apps instead
     public static LocaleManager localeManager;
@@ -15,6 +15,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate");
+        Utility.bypassHiddenApiRestrictions();
         localeManager = new LocaleManager(this);
         localeManager.setLocale(this);
         registerActivityLifecycleCallbacks(new LocaleActivityCallbacks());
