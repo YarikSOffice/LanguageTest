@@ -19,6 +19,7 @@ import com.yariksoffice.languagetest.Utility;
 import java.util.Locale;
 
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_ENGLISH;
+import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_RUSSIAN;
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_UKRAINIAN;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -86,6 +87,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return ContextCompat.getDrawable(this, R.drawable.language_en);
             case LANGUAGE_UKRAINIAN:
                 return ContextCompat.getDrawable(this, R.drawable.language_uk);
+            case LANGUAGE_RUSSIAN:
+                return ContextCompat.getDrawable(this, R.drawable.language_ru);
             default:
                 Log.w(TAG, "Unsupported language");
                 return null;

@@ -39,10 +39,21 @@
             android:layout_height="wrap_content"
             android:minWidth="180dp"
             android:text="@string/activity_2_label"
-            app:layout_constraintBottom_toTopOf="@+id/service"
+            app:layout_constraintBottom_toTopOf="@+id/web_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_1" />
+
+        <Button
+            android:id="@+id/web_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="180dp"
+            android:text="@string/activity_web_view_label"
+            app:layout_constraintBottom_toTopOf="@+id/service"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_2" />
 
         <Button
             android:id="@+id/service"
@@ -53,7 +64,7 @@
             app:layout_constraintBottom_toTopOf="@+id/settings"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_2" />
+            app:layout_constraintTop_toBottomOf="@+id/web_view"  />
 
         <Button
             android:id="@+id/settings"

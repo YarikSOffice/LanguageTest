@@ -9,6 +9,7 @@ import com.yariksoffice.languagetest.App;
 import com.yariksoffice.languagetest.R;
 
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_ENGLISH;
+import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_RUSSIAN;
 import static com.yariksoffice.languagetest.LocaleManager.LANGUAGE_UKRAINIAN;
 
 public class SettingsActivity extends BaseActivity {
@@ -24,6 +25,8 @@ public class SettingsActivity extends BaseActivity {
         findViewById(R.id.en).setOnLongClickListener(v -> setNewLocale(LANGUAGE_ENGLISH, true));
         findViewById(R.id.ukr).setOnClickListener(v -> setNewLocale(LANGUAGE_UKRAINIAN, false));
         findViewById(R.id.ukr).setOnLongClickListener(v -> setNewLocale(LANGUAGE_UKRAINIAN, true));
+        findViewById(R.id.ru).setOnClickListener(v -> setNewLocale(LANGUAGE_RUSSIAN, false));
+        findViewById(R.id.ru).setOnLongClickListener(v -> setNewLocale(LANGUAGE_RUSSIAN, true));
     }
 
     private boolean setNewLocale(String language, boolean restartProcess) {
