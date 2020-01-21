@@ -2,6 +2,8 @@
 <manifest package="com.yariksoffice.languagetest"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -29,6 +31,9 @@
         <activity
             android:name=".ui.TestActivity2"
             android:label="@string/activity_2_label" />
+        <activity
+            android:name=".ui.WebViewActivity"
+            android:label="@string/activity_web_view_label" />
 
         <service
             android:name=".TestService"

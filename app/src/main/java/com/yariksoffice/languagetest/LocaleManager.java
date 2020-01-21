@@ -6,9 +6,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.LocaleList;
 import android.preference.PreferenceManager;
 
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Set;
+
+import androidx.annotation.RequiresApi;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.N;
@@ -17,6 +22,7 @@ public class LocaleManager {
 
     public static final  String LANGUAGE_ENGLISH   = "en";
     public static final  String LANGUAGE_UKRAINIAN = "uk";
+    public static final  String LANGUAGE_RUSSIAN   = "ru";
     private static final String LANGUAGE_KEY       = "language_key";
 
     private final SharedPreferences prefs;
@@ -40,8 +46,8 @@ public class LocaleManager {
 
     @SuppressLint("ApplySharedPref")
     private void persistLanguage(String language) {
-        // use commit() instead of apply(), because sometimes we kill the application process immediately
-        // which will prevent apply() to finish
+        // use commit() instead of apply(), because sometimes we kill the application process
+        // immediately that prevents apply() from finishing
         prefs.edit().putString(LANGUAGE_KEY, language).commit();
     }
 
@@ -51,7 +57,10 @@ public class LocaleManager {
 
         Resources res = context.getResources();
         Configuration config = new Configuration(res.getConfiguration());
-        if (Utility.isAtLeastVersion(JELLY_BEAN_MR1)) {
+        if (Utility.isAtLeastVersion(N)) {
+            setLocaleForApi24(config, locale);
+            context = context.createConfigurationContext(config);
+        } else if (Utility.isAtLeastVersion(JELLY_BEAN_MR1)) {
             config.setLocale(locale);
             context = context.createConfigurationContext(config);
         } else {
@@ -59,6 +68,22 @@ public class LocaleManager {
             res.updateConfiguration(config, res.getDisplayMetrics());
         }
         return context;
+    }
+
+    @RequiresApi(api = N)
+    private void setLocaleForApi24(Configuration config, Locale target) {
+        Set<Locale> set = new LinkedHashSet<>();
+        // bring the target locale to the front of the list
+        set.add(target);
+
+        LocaleList all = LocaleList.getDefault();
+        for (int i = 0; i < all.size(); i++) {
+            // append other locales supported by the user
+            set.add(all.get(i));
+        }
+
+        Locale[] locales = set.toArray(new Locale[0]);
+        config.setLocales(new LocaleList(locales));
     }
 
     public static Locale getLocale(Resources res) {
