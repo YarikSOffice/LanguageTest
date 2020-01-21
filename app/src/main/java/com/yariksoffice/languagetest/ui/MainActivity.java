@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.yariksoffice.languagetest.R;
 import com.yariksoffice.languagetest.TestService;
+import com.yariksoffice.languagetest.WebViewLocaleHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,8 +19,14 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        WebViewLocaleHelper helper = new WebViewLocaleHelper();
+
         findViewById(R.id.activity_1).setOnClickListener(v -> startActivity(new Intent(this, TestActivity1.class)));
         findViewById(R.id.activity_2).setOnClickListener(v -> startActivity(new Intent(this, TestActivity2.class)));
+        findViewById(R.id.web_view).setOnClickListener(v -> {
+            helper.implementWorkaround(this);
+            startActivity(new Intent(this, WebViewActivity.class));
+        });
         findViewById(R.id.service).setOnClickListener(v -> startService(new Intent(this, TestService.class)));
         findViewById(R.id.settings).setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
 
