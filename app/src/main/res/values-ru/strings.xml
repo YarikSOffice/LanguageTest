@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Тест локализации</string>
+    <string name="hello">Привет\n%s</string>
+
+    <string name="ukrainian">Украинский</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+
+    <string name="settings_label">Настройки</string>
+
+    <string name="activity_1_label">Экран 1</string>
+    <string name="activity_2_label">Экран 2</string>
+    <string name="activity_web_view_label">Браузер</string>
+    <string name="activity_1_text">Какой-нибудь текст 1</string>
+    <string name="activity_2_text">Какой-нибудь текст 2</string>
+    <string name="start_service">Запустить Service</string>
+    <string name="settings_tips">Клик для перезагрузки activity \nДолгий клик для перезагрузки application</string>
+</resources>
